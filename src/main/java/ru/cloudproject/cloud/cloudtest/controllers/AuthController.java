@@ -1,19 +1,21 @@
 package ru.cloudproject.cloud.cloudtest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.cloudproject.cloud.cloudtest.repositories.UserRepository;
+import ru.cloudproject.cloud.cloudtest.services.UserTokenService;
 import ru.cloudproject.cloud.cloudtest.utils.JwtUtil;
 import ru.cloudproject.cloud.cloudtest.utils.LoginRequest;
 
-import javax.naming.AuthenticationException;
-import java.util.Collections;
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -24,24 +26,50 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private AuthenticationManager authManager;
     private PasswordEncoder passwordEncoder;
+    private UserTokenService userTokenService;
 
 @Autowired
-    public AuthController(UserRepository userRepository, JwtUtil jwtUtil, AuthenticationManager authManager, PasswordEncoder passwordEncoder) {
+    public AuthController(UserRepository userRepository, JwtUtil jwtUtil, AuthenticationManager authManager, PasswordEncoder passwordEncoder,UserTokenService userTokenService) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.authManager = authManager;
         this.passwordEncoder = passwordEncoder;
+        this.userTokenService = userTokenService;
     }
 
+
+
+
+
     @PostMapping("/login")
-    public Map<String, Object> loginHandler(@RequestBody LoginRequest body){
+    @Transactional
+    public ResponseEntity<?> loginHandler(@RequestBody LoginRequest body) {
+        // Создаем аутентификационный токен
         UsernamePasswordAuthenticationToken authInputToken =
                 new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
+        // Аутентифицируем пользователя
         authManager.authenticate(authInputToken);
 
+        // Генерируем JWT токен
         String token = jwtUtil.generateToken(body.getEmail());
 
-        return Collections.singletonMap("auth-token", token);
+
+        userTokenService.saveToken(body.getEmail(), token);
+
+
+
+        // Возвращаем ответ с токеном
+        return ResponseEntity.ok(Map.of("auth-token", userTokenService.getTokenByEmail(body.getEmail())));
+    }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(Principal principal) {
+        // Удаляем токен из мапы при выходе пользователя
+        userTokenService.deleteToken(principal.getName());
+
+        // Возвращаем успешный ответ
+        return ResponseEntity.ok().build();
     }
 }

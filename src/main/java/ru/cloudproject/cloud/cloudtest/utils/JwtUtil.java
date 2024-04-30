@@ -15,8 +15,8 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    @Value("${jwt_secret}")
-    private String secret;
+
+    private final String secret = "SECRET";
     public String generateToken(String email) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
                 .withSubject("User Details")
