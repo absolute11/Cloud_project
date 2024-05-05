@@ -116,7 +116,7 @@ public class FileController {
         if (!email.equals(jwtUtil.validateTokenAndRetrieveSubject(normalToken))) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(new Error("Unauthorized error"));
+                    .body("Unauthorized error");
         }
 
         try {
@@ -124,7 +124,7 @@ public class FileController {
             if (fileBytes == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(new Error("File not found"));
+                        .body("File not found");
             }
 
             ByteArrayResource resource = new ByteArrayResource(fileBytes);
@@ -134,7 +134,7 @@ public class FileController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(new Error("Error download file"));
+                    .body("Error download file");
         }
     }
 

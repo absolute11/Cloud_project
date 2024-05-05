@@ -1,10 +1,13 @@
 package ru.cloudproject.cloud.cloudtest.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@JsonPOJOBuilder
 @Table(name = "users")
 public class User {
     @Id
