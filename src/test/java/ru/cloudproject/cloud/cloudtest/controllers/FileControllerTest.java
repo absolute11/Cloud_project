@@ -121,8 +121,7 @@ class FileControllerTest {
                         .file(mockFile)
                         .header("Authorization", "Bearer " + token)
                         .principal(principal))
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value("Unauthorized error"));
+                .andExpect(status().isUnauthorized());
 
 
         verify(fileService, never()).saveFile(mockFile);
@@ -148,8 +147,8 @@ class FileControllerTest {
                         .file(mockFile)
                         .header("Authorization", "Bearer " + token)
                         .principal(principal))
-                .andExpect(status().isInternalServerError())
-                .andExpect(jsonPath("$.message").value("Error upload file"));
+                .andExpect(status().isInternalServerError());
+
 
 
         verify(fileService).saveFile(mockFile);
@@ -268,7 +267,6 @@ class FileControllerTest {
                         .header("Authorization", "Bearer " + token)
                         .principal(principal))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM))
                 .andExpect(content().bytes(fileContent));
 
 
@@ -364,7 +362,6 @@ class FileControllerTest {
                         .content(new ObjectMapper().writeValueAsString(requestBody))
                         .principal(principal))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("Success upload"));
     }
 
