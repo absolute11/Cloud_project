@@ -1,4 +1,4 @@
-package ru.cloudproject.cloud.cloudtest.utils;
+package ru.cloudproject.cloud.cloudtest.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

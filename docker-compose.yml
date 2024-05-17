@@ -1,24 +1,21 @@
-version: '3.8'
-
+version: '3'
 services:
-  postgresql:
-    image: postgres:latest
-    restart: always
-    container_name: "java-postgres"
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: "cloud"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "2441"
-    volumes:
-      - "C:/Program Files/PostgreSQL/16/data:/var/lib/postgresql/data"  # Монтирование вашей директории данных
-
-  myapp:
-    container_name: spring_boot_cloud
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    build:
-      dockerfile: Dockerfile
     depends_on:
-      - postgresql
+      - db
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: cloud
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2441
+    ports:
+      - "5432:5432"

@@ -95,8 +95,7 @@ public class FileService {
         Optional<File> optionalFile = fileRepository.findByFileName(filename);
         if(optionalFile.isPresent()){
             File currentFile = optionalFile.get();
-            byte[] fileBytes = currentFile.getFileData();
-            return fileBytes;
+            return currentFile.getFileData();
         }
         else{
             return null;

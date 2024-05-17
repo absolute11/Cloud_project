@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.cloudproject.cloud.cloudtest.dto.AuthResponseDTO;
 import ru.cloudproject.cloud.cloudtest.repositories.UserRepository;
 import ru.cloudproject.cloud.cloudtest.services.UserTokenService;
-import ru.cloudproject.cloud.cloudtest.utils.JwtUtil;
+import ru.cloudproject.cloud.cloudtest.security.JwtUtil;
 import ru.cloudproject.cloud.cloudtest.utils.LoginRequest;
 
 import java.security.Principal;
@@ -23,8 +23,8 @@ public class AuthController {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
-    private AuthenticationManager authManager;
-    private UserTokenService userTokenService;
+    private final AuthenticationManager authManager;
+    private final UserTokenService userTokenService;
 
     @Autowired
     public AuthController(UserRepository userRepository, JwtUtil jwtUtil, AuthenticationManager authManager, UserTokenService userTokenService) {

@@ -3,14 +3,13 @@ package ru.cloudproject.cloud.cloudtest.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.cloudproject.cloud.cloudtest.dto.FileNameAndSizeDTO;
 import ru.cloudproject.cloud.cloudtest.services.FileService;
 import ru.cloudproject.cloud.cloudtest.utils.FilenameNotFoundException;
-import ru.cloudproject.cloud.cloudtest.utils.JwtUtil;
+import ru.cloudproject.cloud.cloudtest.security.JwtUtil;
 
 import java.io.IOException;
 import java.security.Principal;

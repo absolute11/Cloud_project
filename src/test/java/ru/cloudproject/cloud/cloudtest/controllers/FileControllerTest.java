@@ -1,31 +1,23 @@
 package ru.cloudproject.cloud.cloudtest.controllers;
 
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.interfaces.Claim;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.cloudproject.cloud.cloudtest.dto.FileNameAndSizeDTO;
 import ru.cloudproject.cloud.cloudtest.services.FileService;
 import ru.cloudproject.cloud.cloudtest.utils.FilenameNotFoundException;
-import ru.cloudproject.cloud.cloudtest.utils.JwtUtil;
+import ru.cloudproject.cloud.cloudtest.security.JwtUtil;
 
-import java.io.FileInputStream;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.HashMap;

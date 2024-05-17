@@ -69,8 +69,8 @@ public class FileRepositoryTest {
         fileRepository.save(file);
 
 
-        FileNameAndSizeDTO dto1 = new FileNameAndSizeDTO("file1.txt", 2048); // Размер 2048 байт
-        FileNameAndSizeDTO dto2 = new FileNameAndSizeDTO("file2.txt", 4096); // Размер 4096 байт
+        FileNameAndSizeDTO dto1 = new FileNameAndSizeDTO("file1.txt", 2048);
+        FileNameAndSizeDTO dto2 = new FileNameAndSizeDTO("file2.txt", 4096);
 
 
         List<FileNameAndSizeDTO> files = fileRepository.findAllFilenameAndSize(user.getEmail());
